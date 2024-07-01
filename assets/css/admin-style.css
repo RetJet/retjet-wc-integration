@@ -47,3 +47,23 @@
     max-width: 20px;
     max-height: 20px;
 }
+
+.integration-button-wrapper {
+    margin-top: 20px;
+}
+
+.integration-button-wrapper .button-primary {
+    padding: 15px 30px;
+    font-size: 18px;
+}
+
+.integration-button-wrapper .button-primary .dashicons {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.integration-button-wrapper .description {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+}

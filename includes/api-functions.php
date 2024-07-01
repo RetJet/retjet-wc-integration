@@ -89,3 +89,32 @@ function wc_api_dev_create_key($data) {
 
     return $wpdb->insert_id;
 }
+
+// Function to generate RetJet integration URL
+function get_integration_url($api_key, $api_secret) {
+    $shop_domain = get_site_url();
+    $parsed_url = parse_url($shop_domain);
+    $domain = isset($parsed_url['host']) ? $parsed_url['host'] : $shop_domain;
+
+    // Remove trailing slashes
+    $domain = rtrim($domain, '/');
+
+    $form_name = $domain . ' Auto-Configuration';
+    $form_label = $domain . ' Auto-Configuration by RetJet Module';
+
+    $data = array(
+        'form_name' => $form_name,
+        'form_label' => $form_label,
+        'form_channel_type' => 'woocommerce',
+        'form_api_endpoint_url' => $shop_domain.'/wp-json/wc/v3/',
+        'form_api_auth_type' => 'basic',
+        'form_api_customer_key' => $api_key,
+        'form_api_customer_secret' => $api_secret,
+    );
+
+    $json_data = json_encode($data);
+    $encoded_data = urlencode($json_data);
+
+    $integration_base_url = 'https://app.retjet.com/panel/sales_channel/add?data=';
+    return $integration_base_url . $encoded_data;
+}

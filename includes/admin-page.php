@@ -45,6 +45,7 @@ function retjet_woo_integration_page() {
 
     $api_key = get_option('retjet_api_key');
     $woocommerce_api_key = get_option('retjet_woocommerce_api_key');
+    $integration_url = $woocommerce_api_key ? get_integration_url($woocommerce_api_key['consumer_key'], $woocommerce_api_key['consumer_secret']) : '';
     ?>
     <div class="wrap retjet-admin-page">
         <h1>RetJet API Key Management</h1>
@@ -69,6 +70,17 @@ function retjet_woo_integration_page() {
             <form method="post" action="" onsubmit="return confirm('Are you sure you want to delete the API key?');">
                 <?php submit_button('Delete API Key', 'delete', 'delete_api_key'); ?>
             </form>
+
+            <p><strong>Integrate Your Store with RetJet:</strong></p>
+            <div class="integration-button-wrapper">
+                <a href="<?php echo esc_url($integration_url); ?>" target="_blank">
+                    <button type="button" class="button button-primary button-large">
+                        <i class="dashicons dashicons-admin-links"></i> Start integration
+                    </button>
+                </a>
+                <p class="description">Redirects to the RetJet panel and creates a Sales Channel.</p>
+            </div>
+
         <?php else: ?>
             <p>No API key found. Generate a new API key to use the RetJet integration.</p>
             <form method="post" action="">
