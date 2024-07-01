@@ -58,3 +58,7 @@ If you have any questions or encounter issues, visit the [Issues](https://github
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+By using the RetJet Integration module, you ensure a secure and efficient way to integrate your WooCommerce store with the RetJet platform, enabling better management and operation of your online business.
