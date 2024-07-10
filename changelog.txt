@@ -1,0 +1,4 @@
+*** WooCommerce Extension Name Changelog ***
+
+2024-07-10 - version 1.0.0
+* Initial release
