@@ -1,0 +1,23 @@
+name: Build Plugin
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Zip files
+      run: zip -r retjet-woo-integration.zip ./*
+      
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: retjet-woo-integration.zip
+        path: retjet-woo-integration.zip
