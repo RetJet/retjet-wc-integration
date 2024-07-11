@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
 /*
 Plugin Name: RetJet Woo integration
 Plugin URI: https://github.com/RetJet/retjet-woo-integration
