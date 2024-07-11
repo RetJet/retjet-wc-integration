@@ -1,4 +1,4 @@
-=== RetJet WooCommerce Integration ===
+=== RetJet Woo Integration ===
 Contributors: retjet
 Tags: woocommerce, integration, retjet, api
 Requires at least: 5.8

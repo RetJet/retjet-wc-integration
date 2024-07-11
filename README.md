@@ -1,4 +1,4 @@
-# RetJet WooCommerce Integration
+# RetJet Woo Integration
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 

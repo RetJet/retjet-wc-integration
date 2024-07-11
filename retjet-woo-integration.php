@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: RetJet integration
+Plugin Name: RetJet Woo integration
 Plugin URI: https://github.com/RetJet/retjet-woo-integration
 Description: Plugin that generates and manages an API key for integration with the RetJet platform.
 Version: 1.0
