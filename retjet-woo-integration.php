@@ -59,7 +59,7 @@ function RETJET_WOO_INTEGRATION_admin_assets() {
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'retjet_woo_integration_add_settings_link');
 
 function retjet_woo_integration_add_settings_link($links) {
-    $settings_link = '<a href="admin.php?page=retjet-woo-integration">' . __('Settings') . '</a>';
+    $settings_link = '<a href="' . esc_url('admin.php?page=retjet-woo-integration') . '">' . esc_html__('Settings') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 }
