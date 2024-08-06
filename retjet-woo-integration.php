@@ -44,14 +44,14 @@ add_action('admin_enqueue_scripts', 'RETJET_WOO_INTEGRATION_admin_assets');
 
 function RETJET_WOO_INTEGRATION_admin_assets() {
     $version = filemtime(RETJET_WOO_INTEGRATION_DIR . 'assets/css/admin-style.css');
-    wp_enqueue_style('retjet_admin_css', esc_url(RETJET_WOO_INTEGRATION_URL) . 'assets/css/admin-style.css', array(), $version);
+    wp_enqueue_style('retjet_admin_css', htmlentities(RETJET_WOO_INTEGRATION_URL) . 'assets/css/admin-style.css', array(), $version);
 
     $version = filemtime(RETJET_WOO_INTEGRATION_DIR . 'assets/js/admin-script.js');
-    wp_enqueue_script('retjet_admin_js', esc_url(RETJET_WOO_INTEGRATION_URL) . 'assets/js/admin-script.js', array('jquery'), $version, true);
+    wp_enqueue_script('retjet_admin_js', htmlentities(RETJET_WOO_INTEGRATION_URL) . 'assets/js/admin-script.js', array('jquery'), $version, true);
 
     wp_localize_script('retjet_admin_js', 'retjetIntegration', array(
-        'copyIcon' => esc_url(RETJET_WOO_INTEGRATION_URL) . 'assets/images/copy-icon.png',
-        'copiedIcon' => esc_url(RETJET_WOO_INTEGRATION_URL) . 'assets/images/copied-icon.png',
+        'copyIcon' => htmlentities(RETJET_WOO_INTEGRATION_URL) . 'assets/images/copy-icon.png',
+        'copiedIcon' => htmlentities(RETJET_WOO_INTEGRATION_URL) . 'assets/images/copied-icon.png',
     ));
 }
 
