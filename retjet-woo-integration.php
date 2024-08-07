@@ -13,13 +13,16 @@ GitHub Plugin URI: https://github.com/RetJet/retjet-woo-integration
 GitHub Branch: main
 */
 
-// Define constants
-define('RETJET_WOO_INTEGRATION_DIR', plugin_dir_path(__FILE__));
-define('RETJET_WOO_INTEGRATION_URL', plugin_dir_url(__FILE__));
+// Configuration array
+$retjet_woo_integration_config = array(
+    'dir' => plugin_dir_path(__FILE__),
+    'url' => plugin_dir_url(__FILE__)
+);
 
 // Include necessary files
-require_once RETJET_WOO_INTEGRATION_DIR . 'includes/admin-page.php';
-require_once RETJET_WOO_INTEGRATION_DIR . 'includes/api-functions.php';
+require_once $retjet_woo_integration_config['dir'] . 'includes/admin-page.php';
+require_once $retjet_woo_integration_config['dir'] . 'includes/api-functions.php';
+
 
 // Hook to run the function upon plugin activation
 register_activation_hook(__FILE__, 'RETJET_WOO_INTEGRATION_activate');
@@ -43,15 +46,17 @@ function RETJET_WOO_INTEGRATION_activate() {
 add_action('admin_enqueue_scripts', 'RETJET_WOO_INTEGRATION_admin_assets');
 
 function RETJET_WOO_INTEGRATION_admin_assets() {
-    $version = filemtime(RETJET_WOO_INTEGRATION_DIR . 'assets/css/admin-style.css');
-    wp_enqueue_style('retjet_admin_css', htmlentities(RETJET_WOO_INTEGRATION_URL) . 'assets/css/admin-style.css', array(), $version);
+    global $retjet_woo_integration_config;
 
-    $version = filemtime(RETJET_WOO_INTEGRATION_DIR . 'assets/js/admin-script.js');
-    wp_enqueue_script('retjet_admin_js', htmlentities(RETJET_WOO_INTEGRATION_URL) . 'assets/js/admin-script.js', array('jquery'), $version, true);
+    $version = filemtime($retjet_woo_integration_config['dir'] . 'assets/css/admin-style.css');
+    wp_enqueue_style('retjet_admin_css', esc_url($retjet_woo_integration_config['url'] . 'assets/css/admin-style.css'), array(), $version);
+
+    $version = filemtime($retjet_woo_integration_config['dir'] . 'assets/js/admin-script.js');
+    wp_enqueue_script('retjet_admin_js', esc_url($retjet_woo_integration_config['url']. 'assets/js/admin-script.js'), array('jquery'), $version, true);
 
     wp_localize_script('retjet_admin_js', 'retjetIntegration', array(
-        'copyIcon' => htmlentities(RETJET_WOO_INTEGRATION_URL) . 'assets/images/copy-icon.png',
-        'copiedIcon' => htmlentities(RETJET_WOO_INTEGRATION_URL) . 'assets/images/copied-icon.png',
+        'copyIcon' => esc_url($retjet_woo_integration_config['url'] . 'assets/images/copy-icon.png'),
+        'copiedIcon' => esc_url($retjet_woo_integration_config['url'] . 'assets/images/copied-icon.png'),
     ));
 }
 

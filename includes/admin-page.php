@@ -16,6 +16,8 @@ function retjet_woo_integration_menu() {
 
 // Function to display the plugin page
 function retjet_woo_integration_page() {
+    global $retjet_woo_integration_config;
+
     if (!class_exists('WooCommerce')) {
         echo '<div class="wrap"><h1>RetJet API Key Management</h1><p>WooCommerce is not installed or active. Please install and activate WooCommerce to use this plugin.</p></div>';
         return;
@@ -49,7 +51,7 @@ function retjet_woo_integration_page() {
     ?>
     <div class="wrap retjet-admin-page">
         <h1>RetJet API Key Management</h1>
-        <img src="<?php echo RETJET_WOO_INTEGRATION_URL . 'assets/images/retjet-logo.png'; ?>" alt="RetJet Logo" class="retjet-logo">
+        <img src="<?php echo esc_url($retjet_woo_integration_config['url'] . 'assets/images/retjet-logo.png'); ?>" alt="RetJet Logo" class="retjet-logo">
 
         <?php if ($woocommerce_api_key): ?>
             <p>Please enter these keys in the appropriate fields when creating a Sales Channel in RetJet:</p>
@@ -57,14 +59,14 @@ function retjet_woo_integration_page() {
             <div class="input-copy-wrapper">
                 <input type="text" id="consumer_key" value="<?php echo esc_attr($woocommerce_api_key['consumer_key']); ?>" readonly>
                 <button class="button-copy" data-clipboard-target="#consumer_key">
-                    <img src="<?php echo RETJET_WOO_INTEGRATION_URL . 'assets/images/copy.png'; ?>" alt="Copy">
+                    <img src="<?php echo esc_url($retjet_woo_integration_config['url'] . 'assets/images/copy-icon.png'); ?>" alt="Copy">
                 </button>
             </div>
             <label for="consumer_secret"><strong>WooCommerce Consumer Secret:</strong></label>
             <div class="input-copy-wrapper">
                 <input type="text" id="consumer_secret" value="<?php echo esc_attr($woocommerce_api_key['consumer_secret']); ?>" readonly>
                 <button class="button-copy" data-clipboard-target="#consumer_secret">
-                    <img src="<?php echo RETJET_WOO_INTEGRATION_URL . 'assets/images/copy.png'; ?>" alt="Copy">
+                    <img src="<?php echo esc_url($retjet_woo_integration_config['url'] . 'assets/images/copy-icon.png'); ?>" alt="Copy">
                 </button>
             </div>
             <form method="post" action="" onsubmit="return confirm('Are you sure you want to delete the API key?');">
