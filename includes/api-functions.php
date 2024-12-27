@@ -51,12 +51,18 @@ function retjet_delete_woocommerce_api_key() {
     $woocommerce_api_key = get_option('retjet_woocommerce_api_key');
 
     if ($woocommerce_api_key) {
+        $cache_key = 'woocommerce_api_key_exists_' . $woocommerce_api_key['key_id'];
+        wp_cache_delete($cache_key);
+
         global $wpdb;
+        $table_name = $wpdb->prefix . 'woocommerce_api_keys';
+
         $wpdb->delete(
-            $wpdb->prefix . 'woocommerce_api_keys',
+            $table_name,
             array('key_id' => $woocommerce_api_key['key_id']),
             array('%d')
         );
+
         delete_option('retjet_woocommerce_api_key');
     }
 }
@@ -64,9 +70,10 @@ function retjet_delete_woocommerce_api_key() {
 // Function to create WooCommerce API key (helper function)
 function wc_api_dev_create_key($data) {
     global $wpdb;
+    $table_name = $wpdb->prefix . 'woocommerce_api_keys';
 
-    $wpdb->insert(
-        $wpdb->prefix . 'woocommerce_api_keys',
+    $result = $wpdb->insert(
+        $table_name,
         array(
             'user_id'         => $data['user_id'],
             'description'     => $data['description'],
@@ -87,13 +94,22 @@ function wc_api_dev_create_key($data) {
         )
     );
 
-    return $wpdb->insert_id;
+    if ($result) {
+        $insert_id = $wpdb->insert_id;
+
+        $cache_key = 'woocommerce_api_key_exists_' . $insert_id;
+        wp_cache_set($cache_key, true, '', HOUR_IN_SECONDS);
+
+        return $insert_id;
+    }
+
+    return false;
 }
 
 // Function to generate RetJet integration URL
 function get_integration_url($api_key, $api_secret) {
     $shop_domain = get_site_url();
-    $parsed_url = parse_url($shop_domain);
+    $parsed_url = wp_parse_url($shop_domain);
     $domain = isset($parsed_url['host']) ? $parsed_url['host'] : $shop_domain;
 
     // Remove trailing slashes
@@ -112,7 +128,7 @@ function get_integration_url($api_key, $api_secret) {
         'form_api_customer_secret' => $api_secret,
     );
 
-    $json_data = json_encode($data);
+    $json_data = wp_json_encode($data);
     $encoded_data = urlencode($json_data);
 
     $integration_base_url = 'https://app.retjet.com/panel/sales_channel/add?data=';
