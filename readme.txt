@@ -2,10 +2,10 @@
 Contributors: retjet
 Tags: woocommerce, integration, retjet, api
 Requires at least: 5.8
-Tested up to: 6.2
-Stable tag: trunk
+Tested up to: 6.7
+Stable tag: 1.0.0
 Requires PHP: 7.4
-License: MIT
+License: GPLv2 or later
 License URI: https://opensource.org/licenses/MIT
 
 RetJet WooCommerce Integration plugin allows seamless integration of your WooCommerce store with the RetJet platform.

@@ -57,7 +57,7 @@ If you have any questions or encounter issues, visit the [Issues](https://github
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPLv2 or later License - see the [LICENSE](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) file for details.
 
 ---
 
