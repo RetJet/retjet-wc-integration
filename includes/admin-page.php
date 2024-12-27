@@ -28,7 +28,18 @@ function retjet_woo_integration_page() {
     if ($woocommerce_api_key) {
         global $wpdb;
         $key_id = $woocommerce_api_key['key_id'];
-        $key_exists = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}woocommerce_api_keys WHERE key_id = %d", $key_id));
+
+        $cache_key = 'woocommerce_api_key_exists_' . $key_id;
+        $key_exists = wp_cache_get($cache_key);
+
+        if ($key_exists === false) {
+            $key_exists = (int) $wpdb->get_var($wpdb->prepare(
+                "SELECT COUNT(*) FROM {$wpdb->prefix}woocommerce_api_keys WHERE key_id = %d",
+                $key_id
+            ));
+            wp_cache_set($cache_key, $key_exists, '', HOUR_IN_SECONDS);
+        }
+
         if (!$key_exists) {
             delete_option('retjet_woocommerce_api_key');
             delete_option('retjet_api_key');
@@ -37,10 +48,16 @@ function retjet_woo_integration_page() {
     }
 
     if (isset($_POST['generate_api_key'])) {
+        if (!check_admin_referer('generate_api_key_action', 'generate_api_key_nonce')) {
+            wp_die('Nonce verification failed. Please try again.');
+        }
         $api_key = retjet_generate_token(32, false, false);
         update_option('retjet_api_key', $api_key);
         retjet_create_woocommerce_api_key($api_key);
     } elseif (isset($_POST['delete_api_key'])) {
+        if (!check_admin_referer('delete_api_key_action', 'delete_api_key_nonce')) {
+            wp_die('Nonce verification failed. Please try again.');
+        }
         delete_option('retjet_api_key');
         retjet_delete_woocommerce_api_key();
     }
@@ -70,6 +87,7 @@ function retjet_woo_integration_page() {
                 </button>
             </div>
             <form method="post" action="" onsubmit="return confirm('Are you sure you want to delete the API key?');">
+                <?php wp_nonce_field('delete_api_key_action', 'delete_api_key_nonce'); ?>
                 <?php submit_button('Delete API Key', 'delete', 'delete_api_key'); ?>
             </form>
 
@@ -86,6 +104,7 @@ function retjet_woo_integration_page() {
         <?php else: ?>
             <p>No API key found. Generate a new API key to use the RetJet integration.</p>
             <form method="post" action="">
+                <?php wp_nonce_field('generate_api_key_action', 'generate_api_key_nonce'); ?>
                 <?php submit_button('Generate API Key', 'primary', 'generate_api_key'); ?>
             </form>
         <?php endif; ?>
