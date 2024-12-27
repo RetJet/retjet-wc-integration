@@ -2,16 +2,17 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
-/*
-Plugin Name: RetJet Woo integration
-Plugin URI: https://github.com/RetJet/retjet-woo-integration
-Description: Plugin that generates and manages an API key for integration with the RetJet platform.
-Version: 1.0
-Author: RetJet
-Author URI: https://retjet.com
-GitHub Plugin URI: https://github.com/RetJet/retjet-woo-integration
-GitHub Branch: main
-*/
+/**
+ * Plugin Name: RetJet Woo Integration
+ * Plugin URI: https://github.com/RetJet/retjet-woo-integration
+ * Description: Plugin that generates and manages an API key for integration with the RetJet platform.
+ * Version: 1.0.0
+ * Author: RetJet
+ * License: GPLv2 or later
+ * Author URI: https://retjet.com
+ * GitHub Plugin URI: https://github.com/RetJet/retjet-woo-integration
+ * GitHub Branch: main
+ */
 
 // Configuration array
 $retjet_woo_integration_config = array(
@@ -64,7 +65,7 @@ function RETJET_WOO_INTEGRATION_admin_assets() {
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'retjet_woo_integration_add_settings_link');
 
 function retjet_woo_integration_add_settings_link($links) {
-    $settings_link = '<a href="' . esc_url('admin.php?page=retjet-woo-integration') . '">' . esc_html__('Settings') . '</a>';
+    $settings_link = '<a href="' . esc_url('admin.php?page=retjet-woo-integration') . '">' . esc_html__('Settings', 'retjet-woo-integration') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 }
